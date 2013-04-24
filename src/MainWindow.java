@@ -32,6 +32,7 @@ public class MainWindow {
 	private JTextField textUsername;
 	private JTextField textPassword;
 	private List<JPanel> Panels = new ArrayList<JPanel>();
+	private boolean loggedIn = false;
 
 	/**
 	 * Launch the application.
@@ -292,13 +293,10 @@ public class MainWindow {
 		JMenuItem mntmHanteraFlygplatser = new JMenuItem("Hantera flygplatser");
 		mntmHanteraFlygplatser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < Panels.size(); i++) {
-					System.out.println(Panels.get(i).getName());
+				if (loggedIn == true) {
+					hideAllPanels();
+					panelAirports.setVisible(true);
 				}
-				panelAirports.setVisible(true);
-				panelRoute.setVisible(false);
-				panelLogIn.setVisible(false);
-				
 			}
 		});
 		
@@ -306,9 +304,8 @@ public class MainWindow {
 		mntmHanteraFlygrutter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (loggedIn == true) {
+					hideAllPanels();
 					panelRoute.setVisible(true);
-					panelAirports.setVisible(false);
-					panelLogIn.setVisible(false);
 				}
 			}
 		});
@@ -317,20 +314,20 @@ public class MainWindow {
 		panelRoute.setVisible(false);
 	
 	
+		DbFactory.initiateSystem();
 		
-		
-//		for(Airport a : DbFactory.getAllAirports()){
-//			listModelAirports.add(a.getId(), a.getName());
-//		}
-//		for(City c : DbFactory.getAllCities()){
-//			listModelCities.add(c.getId(), c.getName());
-//		}
-//		for(Route r : DbFactory.getAllRoutes()){
-//			listModelRoutes.add(r.getId(), r.getDepartAirport() + " till " + r.getArriveAirport());
-//		}
-//		for(Flight f : DbFactory.getAllFlights()){
-//			listModelFlights.add(f.getId(), f.getDeparture());
-//		}
+		for(Airport a : DbFactory.airports){
+			listModelAirports.add(0, a.getName());
+		}
+		for(City c : DbFactory.cities){
+			listModelCities.add(0, c.getName());
+		}
+		for(Route r : DbFactory.routes){
+			listModelRoutes.add(0, r.getDepartAirport().getName() + " till " + r.getArriveAirport().getName());
+		}
+		for(Flight f : DbFactory.flights){
+			listModelFlights.add(0, f.getDeparture());
+		}
 //		btnSaveRoute.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e)
 //            {
@@ -369,5 +366,20 @@ public class MainWindow {
 //              DbFactory.insertFlight(tempFlight);
 //          }
 //		});
+		btnLoggaIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				if(DbFactory.checkPassword(textUsername.getText(), textPassword.getText())){
+					loggedIn = true;
+					hideAllPanels();
+				}
+			}
+		});
 	}
+	public void hideAllPanels(){
+		for (int i = 0; i < Panels.size(); i++) {
+			Panels.get(i).setVisible(false);
+		}
+	}
+	
 }

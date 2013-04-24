@@ -44,10 +44,10 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM user WHERE username =" + userIn);
+			rs = st.executeQuery("SELECT * FROM user WHERE sUserName='" + userIn + "'");
 
 			if (rs.next()) {
-				passIn = rs.getString("password");
+				passIn = rs.getString("sPassword");
 
 				return true;
 			} else {
