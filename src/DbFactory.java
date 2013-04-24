@@ -14,37 +14,38 @@ public class DbFactory {
 	private static Connection con = null;
 	private static Statement st = null;
 	private static ResultSet rs = null;
-	
-	private static String url = "jdbc:mysql://db4free.net:3306/flyalmhult";
-	private static String user = "flyalmhult";
-	private static String password = "hejsanalla";
-	//private static String url = "jdbc:mysql://localhost:3306/162050-flyalmhult";
-	//private static String user = "root";
-	//private static String password = "";
-	
+
+	// private static String url = "jdbc:mysql://db4free.net:3306/flyalmhult";
+	// private static String user = "flyalmhult";
+	// private static String password = "hejsanalla";
+	private static String url = "jdbc:mysql://localhost:3306/162050-flyalmhult";
+	private static String user = "root";
+	private static String password = "";
+
 	public static List<City> cities = new ArrayList<City>();
 	public static List<Airport> airports = new ArrayList<Airport>();
 	public static List<Route> routes = new ArrayList<Route>();
 	public static List<Plane> planes = new ArrayList<Plane>();
 	public static List<Flight> flights = new ArrayList<Flight>();
-	
-	//Fill the system (lists with data from the database)
-	public static void initiateSystem(){
-	    cities = getAllCities();
+	public static List<User> users = new ArrayList<User>();
+
+	// Fill the system (lists with data from the database)
+	public static void initiateSystem() {
+		cities = getAllCities();
 		airports = getAllAirports();
 		routes = getAllRoutes();
 		planes = getAllPlanes();
 		flights = getAllFlights();
-		
+		users = getAllUsers();
 	}
-	
-	
-	//Function to check if password matches
-	public static boolean checkPassword(String userIn, String passIn){
+
+	// Function to check if password matches
+	public static boolean checkPassword(String userIn, String passIn) {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM user WHERE sUserName='" + userIn + "'");
+			rs = st.executeQuery("SELECT * FROM user WHERE sUserName='"
+					+ userIn + "'");
 
 			if (rs.next()) {
 				passIn = rs.getString("sPassword");
@@ -60,8 +61,6 @@ public class DbFactory {
 		return false;
 	}
 
-	
-	
 	/* --------- GET WITH ID ------------ */
 
 	// returns the city with that id
@@ -99,12 +98,11 @@ public class DbFactory {
 				Airport airport = new Airport();
 				airport.setId(rs.getInt("iID"));
 				airport.setName(rs.getString("sName"));
-				
-				//Cities
-				if ( cities.size() == 0 ) {
+
+				// Cities
+				if (cities.size() == 0) {
 					cities = getAllCities();
 				}
-				
 
 				for (City city : cities) {
 					if (city.getId() == rs.getInt("iCityID")) {
@@ -134,9 +132,9 @@ public class DbFactory {
 
 				route.setId(rs.getInt("iID"));
 				route.setId(rs.getInt("iDistance"));
-				
-				//Airports
-				if ( airports.size() == 0 ) {
+
+				// Airports
+				if (airports.size() == 0) {
 					airports = getAllAirports();
 				}
 
@@ -177,9 +175,9 @@ public class DbFactory {
 				flight.setId(rs.getInt("iID"));
 				flight.setDeparture(rs.getTimestamp("tsDeparture"));
 				flight.setArrival(rs.getTimestamp("tsArrival"));
-				
-				//Routes
-				if ( routes.size() == 0 ) {
+
+				// Routes
+				if (routes.size() == 0) {
 					routes = getAllRoutes();
 				}
 
@@ -189,9 +187,9 @@ public class DbFactory {
 						flight.setRoute(route);
 					}
 				}
-				
-				//Planes
-				if ( planes.size() == 0 ) {
+
+				// Planes
+				if (planes.size() == 0) {
 					planes = getAllPlanes();
 				}
 
@@ -245,9 +243,10 @@ public class DbFactory {
 			if (rs.next()) {
 				User newUser = new User(rs.getInt("iID"),
 						rs.getString("sFirstName"), rs.getString("sLastName"),
-						rs.getString("sAdress"), rs.getString("sTelephone"),
+						rs.getString("sAdress"), rs.getString("iTelephone"),
 						rs.getInt("iClearenceLevel"));
-
+				newUser.setUsername(rs.getString("sUserName"));
+				newUser.setPassword(rs.getString("sPassword"));
 				return newUser;
 			}
 		} catch (SQLException e) {
@@ -274,9 +273,9 @@ public class DbFactory {
 				Airport airport = new Airport();
 				airport.setId(rs.getInt("iID"));
 				airport.setName(rs.getString("sName"));
-				
-				//Cities
-				if ( cities.size() == 0 ) {
+
+				// Cities
+				if (cities.size() == 0) {
 					cities = getAllCities();
 				}
 
@@ -333,9 +332,9 @@ public class DbFactory {
 				flight.setId(rs.getInt("iID"));
 				flight.setDeparture(rs.getTimestamp("tsDeparture"));
 				flight.setArrival(rs.getTimestamp("tsArrival"));
-				
-				//Routes
-				if ( routes.size() == 0 ) {
+
+				// Routes
+				if (routes.size() == 0) {
 					routes = getAllRoutes();
 				}
 
@@ -345,9 +344,9 @@ public class DbFactory {
 						flight.setRoute(route);
 					}
 				}
-				
-				//Planes
-				if ( planes.size() == 0 ) {
+
+				// Planes
+				if (planes.size() == 0) {
 					planes = getAllPlanes();
 				}
 
@@ -406,9 +405,9 @@ public class DbFactory {
 
 				route.setId(rs.getInt("iID"));
 				route.setId(rs.getInt("iDistance"));
-				
-				//Airports
-				if ( airports.size() == 0 ) {
+
+				// Airports
+				if (airports.size() == 0) {
 					airports = getAllAirports();
 				}
 
@@ -447,8 +446,10 @@ public class DbFactory {
 			while (rs.next()) {
 				User newUser = new User(rs.getInt("iID"),
 						rs.getString("sFirstName"), rs.getString("sLastName"),
-						rs.getString("sAdress"), rs.getString("sTelephone"),
+						rs.getString("sAdress"), rs.getString("iTelephone"),
 						rs.getInt("iClearenceLevel"));
+				newUser.setUsername(rs.getString("sUserName"));
+				newUser.setPassword(rs.getString("sPassword"));
 
 				returnList.add(newUser);
 			}
@@ -545,12 +546,14 @@ public class DbFactory {
 			con = DriverManager.getConnection(url, user, password);
 
 			PreparedStatement prepStmt = con
-					.prepareStatement("INSERT INTO user (sfirstName, slastName, sAdress, sTelephone, iClearenceLevel) VALUES (?, ?, ?, ?, ?)");
+					.prepareStatement("INSERT INTO user (sFirstName, sLastName, sAdress, iTelephone, sUserName, sPassword, iClearenceLevel) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			prepStmt.setString(1, newUser.getFirstName());
 			prepStmt.setString(2, newUser.getLastName());
 			prepStmt.setString(3, newUser.getAdress());
 			prepStmt.setString(4, newUser.getTelephone());
-			prepStmt.setInt(5, newUser.getClearenceLevel());
+			prepStmt.setString(5, newUser.getUsername());
+			prepStmt.setString(6, newUser.getPassword());
+			prepStmt.setInt(7, newUser.getClearenceLevel());
 
 			// System.out.println(prepStmt.toString());
 			prepStmt.execute();
@@ -589,7 +592,7 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
-			String tempSQLString = "DELETE FROM city WHERE id =?";
+			String tempSQLString = "DELETE FROM city WHERE iID =?";
 
 			PreparedStatement prepStmt = con.prepareStatement(tempSQLString);
 			prepStmt.setInt(1, id);
@@ -608,7 +611,7 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
-			String tempSQLString = "DELETE FROM airport WHERE id =?";
+			String tempSQLString = "DELETE FROM airport WHERE iID =?";
 
 			PreparedStatement prepStmt = con.prepareStatement(tempSQLString);
 			prepStmt.setInt(1, id);
@@ -627,7 +630,7 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
-			String tempSQLString = "DELETE FROM flight WHERE id =?";
+			String tempSQLString = "DELETE FROM flight WHERE iID =?";
 
 			PreparedStatement prepStmt = con.prepareStatement(tempSQLString);
 			prepStmt.setInt(1, id);
@@ -646,7 +649,7 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
-			String tempSQLString = "DELETE FROM plane WHERE id =?";
+			String tempSQLString = "DELETE FROM plane WHERE iID =?";
 
 			PreparedStatement prepStmt = con.prepareStatement(tempSQLString);
 			prepStmt.setInt(1, id);
@@ -665,7 +668,7 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
-			String tempSQLString = "DELETE FROM route WHERE id =?";
+			String tempSQLString = "DELETE FROM route WHERE iID =?";
 
 			PreparedStatement prepStmt = con.prepareStatement(tempSQLString);
 			prepStmt.setInt(1, id);
@@ -684,7 +687,7 @@ public class DbFactory {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
-			String tempSQLString = "DELETE FROM user WHERE id =?";
+			String tempSQLString = "DELETE FROM user WHERE iID =?";
 
 			PreparedStatement prepStmt = con.prepareStatement(tempSQLString);
 			prepStmt.setInt(1, id);
