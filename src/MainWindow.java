@@ -39,6 +39,14 @@ public class MainWindow {
 	DefaultListModel listModelCities = new DefaultListModel();
 	DefaultListModel listModelRoutes = new DefaultListModel();
 	DefaultListModel listModelFlights = new DefaultListModel();
+	private JTextField textFirstName;
+	private JTextField textLastName;
+	private JTextField textAdress;
+	private JTextField textZipCode;
+	private JTextField textEmail;
+	private JTextField textTelephone;
+	private JTextField textUserName;
+	private JTextField textPass;
 
 	/**
 	 * Launch the application.
@@ -72,6 +80,115 @@ public class MainWindow {
 		frame.setBounds(100, 100, 567, 598);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		final JPanel panelManageUsers = new JPanel();
+		panelManageUsers.setBounds(65, 40, 313, 502);
+		frame.getContentPane().add(panelManageUsers);
+		panelManageUsers.setLayout(null);
+		
+		JLabel lblHanteraAnvndare = new JLabel("Hantera anv\u00E4ndare");
+		lblHanteraAnvndare.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblHanteraAnvndare.setBounds(6, 17, 183, 27);
+		panelManageUsers.add(lblHanteraAnvndare);
+		
+		textFirstName = new JTextField();
+		textFirstName.setBounds(139, 75, 134, 28);
+		panelManageUsers.add(textFirstName);
+		textFirstName.setColumns(10);
+		
+		textLastName = new JTextField();
+		textLastName.setBounds(139, 109, 134, 28);
+		panelManageUsers.add(textLastName);
+		textLastName.setColumns(10);
+		
+		JLabel lblFrnamn = new JLabel("F\u00F6rnamn");
+		lblFrnamn.setBounds(40, 81, 61, 16);
+		panelManageUsers.add(lblFrnamn);
+		
+		JLabel lblEfternamn = new JLabel("Efternamn");
+		lblEfternamn.setBounds(40, 115, 87, 16);
+		panelManageUsers.add(lblEfternamn);
+		
+		textAdress = new JTextField();
+		textAdress.setBounds(139, 137, 134, 28);
+		panelManageUsers.add(textAdress);
+		textAdress.setColumns(10);
+		
+		JLabel lblAdress = new JLabel("Adress");
+		lblAdress.setBounds(40, 143, 61, 16);
+		panelManageUsers.add(lblAdress);
+		
+		textZipCode = new JTextField();
+		textZipCode.setBounds(139, 168, 134, 28);
+		panelManageUsers.add(textZipCode);
+		textZipCode.setColumns(10);
+		
+		JLabel lblPostnummer = new JLabel("Postadress");
+		lblPostnummer.setBounds(40, 174, 87, 16);
+		panelManageUsers.add(lblPostnummer);
+		
+		textEmail = new JTextField();
+		textEmail.setBounds(139, 196, 134, 28);
+		panelManageUsers.add(textEmail);
+		textEmail.setColumns(10);
+		
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(40, 202, 61, 16);
+		panelManageUsers.add(lblEmail);
+		
+		textTelephone = new JTextField();
+		textTelephone.setBounds(139, 232, 134, 28);
+		panelManageUsers.add(textTelephone);
+		textTelephone.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Telefon");
+		lblNewLabel.setBounds(40, 230, 61, 33);
+		panelManageUsers.add(lblNewLabel);
+		
+		textUserName = new JTextField();
+		textUserName.setBounds(139, 259, 134, 28);
+		panelManageUsers.add(textUserName);
+		textUserName.setColumns(10);
+		
+		JLabel lblAnvndarnamn_1 = new JLabel("Anv\u00E4ndarnamn");
+		lblAnvndarnamn_1.setBounds(40, 265, 94, 16);
+		panelManageUsers.add(lblAnvndarnamn_1);
+		
+		textPass = new JTextField();
+		textPass.setBounds(139, 285, 134, 28);
+		panelManageUsers.add(textPass);
+		textPass.setColumns(10);
+		
+		JLabel lblLsenord_1 = new JLabel("L\u00F6senord");
+		lblLsenord_1.setBounds(40, 291, 61, 16);
+		panelManageUsers.add(lblLsenord_1);
+		
+		JComboBox comboBoxClearance = new JComboBox();
+		comboBoxClearance.setBounds(139, 315, 134, 27);
+		panelManageUsers.add(comboBoxClearance);
+		
+		JLabel lblBehrighet = new JLabel("Beh\u00F6righet");
+		lblBehrighet.setBounds(40, 319, 94, 16);
+		panelManageUsers.add(lblBehrighet);
+		
+		JButton btnSaveUser = new JButton("Spara ");
+		btnSaveUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSaveUser.setBounds(139, 350, 117, 29);
+		panelManageUsers.add(btnSaveUser);
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(40, 407, 233, 84);
+		panelManageUsers.add(scrollPane_4);
+		
+		JList list = new JList();
+		scrollPane_4.setViewportView(list);
+		
+		JLabel lblTillgngligaAnvndare = new JLabel("Tillg\u00E4ngliga anv\u00E4ndare");
+		lblTillgngligaAnvndare.setBounds(40, 388, 233, 16);
+		panelManageUsers.add(lblTillgngligaAnvndare);
 		
 		
 		
@@ -298,8 +415,6 @@ public class MainWindow {
 		panelLogIn.add(btnLoggaIn);
 		
 		
-		
-		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 93, 21);
 		frame.getContentPane().add(menuBar);
@@ -340,6 +455,16 @@ public class MainWindow {
 			}
 		});
 		mnMeny.add(mntmLoggaUt);
+		
+		JMenuItem mntmHanteraAnvndare = new JMenuItem("Hantera anv\u00E4ndare");
+		mntmHanteraAnvndare.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hideAllPanels();
+				panelManageUsers.setVisible(true);
+			}
+		});
+		mnMeny.add(mntmHanteraAnvndare);
+		
 	
 	
 		DbFactory.initiateSystem();
