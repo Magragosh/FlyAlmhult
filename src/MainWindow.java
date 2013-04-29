@@ -22,6 +22,7 @@ import java.util.List;
 import javax.swing.border.EtchedBorder;
 import classes.*;
 import javax.swing.JScrollPane;
+import javax.swing.JPasswordField;
 
 public class MainWindow {
 
@@ -31,7 +32,6 @@ public class MainWindow {
 	private JTextField textFieldDepartureTime;
 	private JTextField textFieldArrivalTime;
 	private JTextField textUsername;
-	private JTextField textPassword;
 	private List<JPanel> Panels = new ArrayList<JPanel>();
 	private boolean loggedIn = false;
 	
@@ -47,6 +47,7 @@ public class MainWindow {
 	private JTextField textTelephone;
 	private JTextField textUserName;
 	private JTextField textPass;
+	private JPasswordField textPassword;
 
 	/**
 	 * Launch the application.
@@ -81,10 +82,171 @@ public class MainWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		final JPanel panelLogIn = new JPanel();
+		panelLogIn.setBounds(65, 39, 313, 503);
+		frame.getContentPane().add(panelLogIn);
+		panelLogIn.setLayout(null);
+		Panels.add(panelLogIn);
+		
+		textUsername = new JTextField();
+		textUsername.setBounds(26, 64, 215, 20);
+		panelLogIn.add(textUsername);
+		textUsername.setColumns(10);
+		
+		JLabel lblLoggaIn = new JLabel("Logga in");
+		lblLoggaIn.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblLoggaIn.setBounds(10, 11, 82, 20);
+		panelLogIn.add(lblLoggaIn);
+		
+		JLabel lblAnvndarnamn = new JLabel("Anv\u00E4ndarnamn:");
+		lblAnvndarnamn.setBounds(26, 49, 104, 14);
+		panelLogIn.add(lblAnvndarnamn);
+		
+		JLabel lblLsenord = new JLabel("L\u00F6senord:");
+		lblLsenord.setBounds(26, 95, 92, 14);
+		panelLogIn.add(lblLsenord);
+		
+		JButton btnLoggaIn = new JButton("Logga in");
+		btnLoggaIn.setBounds(152, 136, 89, 23);
+		panelLogIn.add(btnLoggaIn);
+		
+		textPassword = new JPasswordField();
+		textPassword.setBounds(26, 108, 215, 20);
+		panelLogIn.add(textPassword);
+		//		btnSaveRoute.addActionListener(new ActionListener() {
+		//			public void actionPerformed(ActionEvent e)
+		//            {
+		//				Route tempRoute;
+		//				tempRoute.setArriveAirport(arriveAirport);
+		//				tempRoute.setDepartAirport(departAirport);
+		//                DbFactory.insertRoute(tempRoute);
+		//            }
+		//		});
+		//		btnAddCity.addActionListener(new ActionListener() {
+		//			public void actionPerformed(ActionEvent e)
+		//          {
+		//				City tempCity;
+		//				tempCity.setCountry(country);
+		//				tempCity.setName(name);
+		//              DbFactory.insertCity(tempCity);
+		//          }
+		//		});
+		//		btnAddAirport.addActionListener(new ActionListener() {
+		//			public void actionPerformed(ActionEvent e)
+		//          {
+		//				Airport tempAirport;
+		//				tempAirport.setCity(city);
+		//				tempAirport.setName(name);
+		//              DbFactory.insertAirport(tempAirport);
+		//          }
+		//		});
+		//		btnSparaFlight.addActionListener(new ActionListener() {
+		//			public void actionPerformed(ActionEvent e)
+		//          {
+		//				Flight tempFlight;
+		//				tempFlight.setArrival(arrival);
+		//				tempFlight.setDeparture(departure);
+		//				tempFlight.setPlane(plane);
+		//				tempFlight.setRoute(route);
+		//              DbFactory.insertFlight(tempFlight);
+		//          }
+		//		});
+				btnLoggaIn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+					{
+						if(DbFactory.checkPassword(textUsername.getText(), textPassword.getText())){
+							loggedIn = true;
+							hideAllPanels();
+						}
+					}
+				});
+		
+		final JPanel panelAirports = new JPanel();
+		panelAirports.setBounds(65, 40, 276, 502);
+		frame.getContentPane().add(panelAirports);
+		panelAirports.setLayout(null);
+		panelAirports.setVisible(false);
+		Panels.add(panelAirports);
+		
+		JLabel lblHanteraFlygplatser = new JLabel("Hantera flygplatser");
+		lblHanteraFlygplatser.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblHanteraFlygplatser.setBounds(10, 11, 162, 28);
+		panelAirports.add(lblHanteraFlygplatser);
+		
+		JLabel lblFlygplats = new JLabel("Flygplats:");
+		lblFlygplats.setBounds(10, 50, 56, 14);
+		panelAirports.add(lblFlygplats);
+		
+		JLabel lblStad = new JLabel("Stad:");
+		lblStad.setBounds(10, 75, 46, 14);
+		panelAirports.add(lblStad);
+		
+		textAirportName = new JTextField();
+		textAirportName.setBounds(61, 47, 205, 20);
+		panelAirports.add(textAirportName);
+		textAirportName.setColumns(10);
+		
+		JComboBox comboBoxCity = new JComboBox();
+		comboBoxCity.setBounds(61, 72, 205, 20);
+		panelAirports.add(comboBoxCity);
+		
+		JButton btnAddAirport = new JButton("L\u00E4gg till/\u00C4ndra");
+		btnAddAirport.setBounds(145, 100, 121, 23);
+		panelAirports.add(btnAddAirport);
+		
+		JButton btnDeleteAirport = new JButton("Ta bort flygplats");
+		btnDeleteAirport.setBounds(145, 134, 121, 23);
+		panelAirports.add(btnDeleteAirport);
+		
+		JLabel lblTillgngligaFlygplatser = new JLabel("Tillg\u00E4ngliga flygplatser");
+		lblTillgngligaFlygplatser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTillgngligaFlygplatser.setBounds(10, 168, 162, 14);
+		panelAirports.add(lblTillgngligaFlygplatser);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 193, 256, 94);
+		panelAirports.add(scrollPane);
+		
+		JList listAirports = new JList(listModelAirports);
+		scrollPane.setViewportView(listAirports);
+		listAirports.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel lblLggTillStder = new JLabel("L\u00E4gg till st\u00E4der");
+		lblLggTillStder.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLggTillStder.setBounds(10, 312, 127, 14);
+		panelAirports.add(lblLggTillStder);
+		
+		textAddCity = new JTextField();
+		textAddCity.setBounds(10, 331, 144, 20);
+		panelAirports.add(textAddCity);
+		textAddCity.setColumns(10);
+		
+		JButton btnAddCity = new JButton("L\u00E4gg till/\u00C4ndra");
+		btnAddCity.setBounds(155, 330, 111, 23);
+		panelAirports.add(btnAddCity);
+		
+		JButton btnTaBortStad = new JButton("Ta bort stad");
+		btnTaBortStad.setBounds(166, 354, 100, 23);
+		panelAirports.add(btnTaBortStad);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 399, 256, 92);
+		panelAirports.add(scrollPane_1);
+		
+		JList listCities = new JList(listModelCities);
+		scrollPane_1.setViewportView(listCities);
+		listCities.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel lblTillgngligaStder = new JLabel("Tillg\u00E4ngliga st\u00E4der");
+		lblTillgngligaStder.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTillgngligaStder.setBounds(10, 374, 152, 14);
+		panelAirports.add(lblTillgngligaStder);
+		
 		final JPanel panelManageUsers = new JPanel();
 		panelManageUsers.setBounds(65, 40, 313, 502);
 		frame.getContentPane().add(panelManageUsers);
 		panelManageUsers.setLayout(null);
+		Panels.add(panelManageUsers);
 		
 		JLabel lblHanteraAnvndare = new JLabel("Hantera anv\u00E4ndare");
 		lblHanteraAnvndare.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -298,121 +460,6 @@ public class MainWindow {
 		lblTillgngligaFlights.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTillgngligaFlights.setBounds(10, 398, 123, 14);
 		panelRoute.add(lblTillgngligaFlights);
-		panelRoute.setVisible(false);
-		
-		final JPanel panelAirports = new JPanel();
-		panelAirports.setBounds(65, 40, 276, 502);
-		frame.getContentPane().add(panelAirports);
-		panelAirports.setLayout(null);
-		panelAirports.setVisible(false);
-		Panels.add(panelAirports);
-		
-		JLabel lblHanteraFlygplatser = new JLabel("Hantera flygplatser");
-		lblHanteraFlygplatser.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblHanteraFlygplatser.setBounds(10, 11, 162, 28);
-		panelAirports.add(lblHanteraFlygplatser);
-		
-		JLabel lblFlygplats = new JLabel("Flygplats:");
-		lblFlygplats.setBounds(10, 50, 56, 14);
-		panelAirports.add(lblFlygplats);
-		
-		JLabel lblStad = new JLabel("Stad:");
-		lblStad.setBounds(10, 75, 46, 14);
-		panelAirports.add(lblStad);
-		
-		textAirportName = new JTextField();
-		textAirportName.setBounds(61, 47, 205, 20);
-		panelAirports.add(textAirportName);
-		textAirportName.setColumns(10);
-		
-		JComboBox comboBoxCity = new JComboBox();
-		comboBoxCity.setBounds(61, 72, 205, 20);
-		panelAirports.add(comboBoxCity);
-		
-		JButton btnAddAirport = new JButton("L\u00E4gg till/\u00C4ndra");
-		btnAddAirport.setBounds(145, 100, 121, 23);
-		panelAirports.add(btnAddAirport);
-		
-		JButton btnDeleteAirport = new JButton("Ta bort flygplats");
-		btnDeleteAirport.setBounds(145, 134, 121, 23);
-		panelAirports.add(btnDeleteAirport);
-		
-		JLabel lblTillgngligaFlygplatser = new JLabel("Tillg\u00E4ngliga flygplatser");
-		lblTillgngligaFlygplatser.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTillgngligaFlygplatser.setBounds(10, 168, 162, 14);
-		panelAirports.add(lblTillgngligaFlygplatser);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 193, 256, 94);
-		panelAirports.add(scrollPane);
-		
-		JList listAirports = new JList(listModelAirports);
-		scrollPane.setViewportView(listAirports);
-		listAirports.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel lblLggTillStder = new JLabel("L\u00E4gg till st\u00E4der");
-		lblLggTillStder.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblLggTillStder.setBounds(10, 312, 127, 14);
-		panelAirports.add(lblLggTillStder);
-		
-		textAddCity = new JTextField();
-		textAddCity.setBounds(10, 331, 144, 20);
-		panelAirports.add(textAddCity);
-		textAddCity.setColumns(10);
-		
-		JButton btnAddCity = new JButton("L\u00E4gg till/\u00C4ndra");
-		btnAddCity.setBounds(155, 330, 111, 23);
-		panelAirports.add(btnAddCity);
-		
-		JButton btnTaBortStad = new JButton("Ta bort stad");
-		btnTaBortStad.setBounds(166, 354, 100, 23);
-		panelAirports.add(btnTaBortStad);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 399, 256, 92);
-		panelAirports.add(scrollPane_1);
-		
-		JList listCities = new JList(listModelCities);
-		scrollPane_1.setViewportView(listCities);
-		listCities.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel lblTillgngligaStder = new JLabel("Tillg\u00E4ngliga st\u00E4der");
-		lblTillgngligaStder.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTillgngligaStder.setBounds(10, 374, 152, 14);
-		panelAirports.add(lblTillgngligaStder);
-		
-		final JPanel panelLogIn = new JPanel();
-		panelLogIn.setBounds(65, 39, 302, 246);
-		frame.getContentPane().add(panelLogIn);
-		panelLogIn.setLayout(null);
-		Panels.add(panelLogIn);
-		
-		textUsername = new JTextField();
-		textUsername.setBounds(26, 64, 215, 20);
-		panelLogIn.add(textUsername);
-		textUsername.setColumns(10);
-		
-		JLabel lblLoggaIn = new JLabel("Logga in");
-		lblLoggaIn.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblLoggaIn.setBounds(10, 11, 82, 20);
-		panelLogIn.add(lblLoggaIn);
-		
-		JLabel lblAnvndarnamn = new JLabel("Anv\u00E4ndarnamn:");
-		lblAnvndarnamn.setBounds(26, 49, 104, 14);
-		panelLogIn.add(lblAnvndarnamn);
-		
-		JLabel lblLsenord = new JLabel("L\u00F6senord:");
-		lblLsenord.setBounds(26, 95, 92, 14);
-		panelLogIn.add(lblLsenord);
-		
-		textPassword = new JTextField();
-		textPassword.setBounds(26, 109, 215, 20);
-		panelLogIn.add(textPassword);
-		textPassword.setColumns(10);
-		
-		JButton btnLoggaIn = new JButton("Logga in");
-		btnLoggaIn.setBounds(152, 136, 89, 23);
-		panelLogIn.add(btnLoggaIn);
 		
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -454,7 +501,6 @@ public class MainWindow {
 				textPassword.setText("");
 			}
 		});
-		mnMeny.add(mntmLoggaUt);
 		
 		JMenuItem mntmHanteraAnvndare = new JMenuItem("Hantera anv\u00E4ndare");
 		mntmHanteraAnvndare.addActionListener(new ActionListener() {
@@ -464,6 +510,8 @@ public class MainWindow {
 			}
 		});
 		mnMeny.add(mntmHanteraAnvndare);
+		mnMeny.add(mntmLoggaUt);
+		panelRoute.setVisible(false);
 		
 	
 	
@@ -481,53 +529,6 @@ public class MainWindow {
 		for(Flight f : DbFactory.flights){
 			listModelFlights.add(0, f.getDeparture());
 		}
-//		btnSaveRoute.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e)
-//            {
-//				Route tempRoute;
-//				tempRoute.setArriveAirport(arriveAirport);
-//				tempRoute.setDepartAirport(departAirport);
-//                DbFactory.insertRoute(tempRoute);
-//            }
-//		});
-//		btnAddCity.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e)
-//          {
-//				City tempCity;
-//				tempCity.setCountry(country);
-//				tempCity.setName(name);
-//              DbFactory.insertCity(tempCity);
-//          }
-//		});
-//		btnAddAirport.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e)
-//          {
-//				Airport tempAirport;
-//				tempAirport.setCity(city);
-//				tempAirport.setName(name);
-//              DbFactory.insertAirport(tempAirport);
-//          }
-//		});
-//		btnSparaFlight.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e)
-//          {
-//				Flight tempFlight;
-//				tempFlight.setArrival(arrival);
-//				tempFlight.setDeparture(departure);
-//				tempFlight.setPlane(plane);
-//				tempFlight.setRoute(route);
-//              DbFactory.insertFlight(tempFlight);
-//          }
-//		});
-		btnLoggaIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				if(DbFactory.checkPassword(textUsername.getText(), textPassword.getText())){
-					loggedIn = true;
-					hideAllPanels();
-				}
-			}
-		});
 	}
 	public void hideAllPanels(){
 		for (int i = 0; i < Panels.size(); i++) {
