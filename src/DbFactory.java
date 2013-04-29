@@ -15,12 +15,12 @@ public class DbFactory {
 	private static Statement st = null;
 	private static ResultSet rs = null;
 
-	private static String url = "jdbc:mysql://db4free.net:3306/flyalmhult";
-	private static String user = "flyalmhult";
-	private static String password = "hejsanalla";
-	//private static String url = "jdbc:mysql://localhost:3306/162050-flyalmhult";
-	//private static String user = "root";
-	//private static String password = "";
+	//private static String url = "jdbc:mysql://db4free.net:3306/flyalmhult";
+	//private static String user = "flyalmhult";
+	//private static String password = "hejsanalla";
+	private static String url = "jdbc:mysql://localhost:3306/162050-flyalmhult";
+	private static String user = "root";
+	private static String password = "";
 
 	public static List<City> cities = new ArrayList<City>();
 	public static List<Airport> airports = new ArrayList<Airport>();
@@ -118,6 +118,7 @@ public class DbFactory {
 
 		return null;
 	}
+	
 
 	// returns the route with that id
 	public static Route getRoute(int id) {
@@ -294,6 +295,42 @@ public class DbFactory {
 
 		return returnList;
 	}
+	
+	
+	// returns a list with all airports, for a city
+		public static List<Airport> getAllCityAirports(int cityId) {
+			List<Airport> returnList = new ArrayList<Airport>();
+
+			try {
+				con = DriverManager.getConnection(url, user, password);
+				st = con.createStatement();
+				rs = st.executeQuery("SELECT * FROM airport WHERE iCityId=" + cityId);
+
+				while (rs.next()) {
+					Airport airport = new Airport();
+					airport.setId(rs.getInt("iID"));
+					airport.setName(rs.getString("sName"));
+
+					// Cities
+					if (cities.size() == 0) {
+						cities = getAllCities();
+					}
+
+					// City
+					for (City city : cities) {
+						if (city.getId() == rs.getInt("iCityID")) {
+							airport.setCity(city);
+						}
+					}
+
+					returnList.add(airport);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return returnList;
+		}
 
 	// returns a list with all cities
 	public static List<City> getAllCities() {
