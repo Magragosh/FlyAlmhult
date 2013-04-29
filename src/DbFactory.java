@@ -15,12 +15,12 @@ public class DbFactory {
 	private static Statement st = null;
 	private static ResultSet rs = null;
 
-	// private static String url = "jdbc:mysql://db4free.net:3306/flyalmhult";
-	// private static String user = "flyalmhult";
-	// private static String password = "hejsanalla";
-	private static String url = "jdbc:mysql://localhost:3306/162050-flyalmhult";
-	private static String user = "root";
-	private static String password = "";
+	private static String url = "jdbc:mysql://sql2.freesqldatabase.com/sql27485";
+	private static String user = "sql27485";
+	private static String password = "jF8!yV5%";
+//	private static String url = "jdbc:mysql://localhost:3306/162050-flyalmhult";
+//	private static String user = "root";
+//	private static String password = "";
 
 	public static List<City> cities = new ArrayList<City>();
 	public static List<Airport> airports = new ArrayList<Airport>();
