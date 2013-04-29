@@ -5,6 +5,8 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String adress;
+	private String zipCode;
+	private String email;
 	private String telephone;
 	private String username;
 	private String password;
@@ -27,6 +29,21 @@ public class User {
 	}
 	public void setAdress(String adress) {
 		this.adress = adress;
+	}
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getTelephone() {
 		return telephone;
